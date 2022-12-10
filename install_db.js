@@ -1,13 +1,15 @@
 'use strict';
+require('dotenv').config();
 
 const mongoose = require('mongoose');
 const readLine = require('readline');
+
 const async = require('async');
 
 const db = require('./lib/connectMongoose');
 
 // Cargamos las definiciones de todos nuestros modelos
-const Anuncio = require('./models/Anuncio');
+const { Anuncio, Usuarios } = require('./models/index');
 
 db.once('open', async function () {
   try {
@@ -16,6 +18,7 @@ db.once('open', async function () {
       
       // Inicializar nuestros modelos
       await initAnuncios();
+      await initUsuarios();
       
     } else {
       console.log('DB install aborted!');
@@ -39,6 +42,20 @@ function askUser(question) {
   });
 }
 
+async function initUsuarios() {
+
+  // borrar todos los documentos de usuario
+  const deleted = await Usuarios.deleteMany();
+  console.log(`Eliminados ${deleted.deletedCount} usuarios.`);
+ 
+  // crear usuarios iniciales
+  const inserted = await Usuarios.insertMany([
+    { email: 'user@example.com', password: await Usuarios.hashPassword('1234') },
+  ]);
+  console.log(`Creados ${inserted.length} usuarios.`);
+ 
+ }
+ 
 async function initAnuncios() {
 
   await Anuncio.remove({});
@@ -54,3 +71,5 @@ async function initAnuncios() {
   return numLoaded;
 
 }
+
+

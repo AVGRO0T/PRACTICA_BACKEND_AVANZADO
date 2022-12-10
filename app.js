@@ -6,6 +6,12 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
+/* Importando los controladores de Login y JWT */
+const jwtAuthController = require ('./lib/jwtAuthController')
+const LoginAuthController = require('./routes/apiv1/loginAuthController');
+
+
+
 /* jshint ignore:start */
 const db = require('./lib/connectMongoose');
 /* jshint ignore:end */
@@ -33,7 +39,9 @@ app.use('/', require('./routes/index'));
 app.use('/anuncios', require('./routes/anuncios'));
 
 // API v1
-app.use('/apiv1/anuncios', require('./routes/apiv1/anuncios'));
+const loginAuthController = new LoginAuthController();
+app.use('/api/anuncios', jwtAuthController, require('./routes/apiv1/anuncios'));
+app.use('/api/authenticate', loginAuthController.postJWT ) // Pagina para hacer Login
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
