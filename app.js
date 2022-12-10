@@ -37,6 +37,7 @@ app.locals.title = 'NodePop';
 // Web
 app.use('/', require('./routes/index'));
 app.use('/anuncios', require('./routes/anuncios'));
+app.use('/change-locale', require('./routes/change-locale'));
 
 // API v1
 const loginAuthController = new LoginAuthController();
