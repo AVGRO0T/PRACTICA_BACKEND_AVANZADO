@@ -40,10 +40,27 @@ To start in development mode:
 ## API v1 info
 
 
+### User Login Path
+
+Post http://localhost:3000/api/authenticate
+
+{
+  Email: "user@example.com
+  Password: "1234"
+}
+
+This return a token
+
+
+
 ### Base Path
 
 The API can be used with the path:
-[API V1](/apiv1/anuncios)
+[API V1](/api/anuncios)
+
+¡The API need a token to make GET requests!
+
+
 
 ### Error example
 
