@@ -15,6 +15,8 @@ Api for the iOS/Android apps.
 
 Review lib/connectMongoose.js to set database configuration
 
+Create arhive with .envExample to .env
+
 ### Init database
 
     npm run installDB
