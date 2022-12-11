@@ -6,6 +6,8 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
+/* Importando i18n para internacionalizar */
+const i18n = require('./lib/i18nConfigureController');
 /* Importando los controladores de Login y JWT */
 const jwtAuthController = require ('./lib/jwtAuthController')
 const LoginAuthController = require('./routes/apiv1/loginAuthController');
@@ -34,10 +36,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Global Template variables
 app.locals.title = 'NodePop';
 
+// Iniciando i18n
+app.use(i18n.init);
+
 // Web
 app.use('/', require('./routes/index'));
 app.use('/anuncios', require('./routes/anuncios'));
-app.use('/change-locale', require('./routes/change-locale'));
+app.use('/change-language', require('./routes/change-language'));
 
 // API v1
 const loginAuthController = new LoginAuthController();
